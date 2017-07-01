@@ -1,0 +1,1733 @@
+Setting up the instrument of type: FDMDX
+
+Successfully completed the setting up the of instrument of type: FDMDX
+Running the method: Demo/Shake and Actuate Testing -v1 with RunId: 11111-141
+----------------- FDMDX_$RUN_END -----------------
+  SecureHardware()
+--------------------------------------------------
+    FDMDX_ScriptLib.FanStop()
+          cmd:  0005233B00ABB0
+          rtn:  0005243b002e20 
+
+ 
+    GEN_ScriptLib.ShakeLock()
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  000623300E0089AD
+          rtn:  0005243000f2da 
+
+      Set  ShakeAxis  channel  14  to  0 ( shake lock engaged )
+
+    FDMDX_ScriptLib.LightSwitch()
+      cycle  0
+          cmd:  0006233015005624
+          rtn:  0005243000f2da 
+
+       MainMCU  channel  21  to  0 ( off )
+
+    FDMDX_ScriptLib.DoorLock()
+
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  0006233014006515
+          rtn:  0005243000f2da 
+
+      Set  MainMCU  channel  20  to  0 ( door lock )
+
+
+****************** Executing RUN_INIT command ******************
+Checking status for: CheckDoor
+Output: {"Status":{"GPIO_SwitchLights":0,"GPIO_DoorCheck":0},"Data":{"DoorVal":1},"Err":{"Return":"E0000"}}
+Return Code: 0
+Command successful
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  CheckDoor()
+--------------------------------------------------
+    FDMDX_ScriptLib.LightSwitch()
+      cycle  0
+          cmd:  0006233015014605
+          rtn:  0005243000f2da 
+
+       MainMCU  channel  21  to  1 ( on )
+
+    FDMDX_ScriptLib.DoorCheck()
+      Door (chan  40 )
+          cmd:  0005233128E111
+          rtn:  000624310001dc9e 
+
+    The door is closed
+Completed status for: CheckDoor
+Checking status for: LockAll
+Output: {"Status":{"GPIO_Set":0,"GPIO_DoorLock":0,"GPIO_ShakeLock":0,"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0},"Data":{},"Err":{"Return":"E0000"}}
+Return Code: 0
+Command successful
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  LockAll() [door and shake axis]
+--------------------------------------------------
+    FDMDX_ScriptLib.DoorLock()
+
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  0006233014017534
+          rtn:  0005243000f2da 
+
+      Set  MainMCU  channel  20  to  1 ( door lock )
+
+ 
+    GEN_ScriptLib.ShakeLock()
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  000623300E0089AD
+          rtn:  0005243000f2da 
+
+      Set  ShakeAxis  channel  14  to  0 ( shake lock engaged )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF00FF00075300015F9000015F90000000006B4A
+          rtn:  00052484002013 
+
+      Move to home command success
+Completed status for: LockAll
+Checking status for: SetActnAuxiliary
+Output: {"Status":{"MOTN_AllocAuxPosnPlan":0,"GPIO_ResetMotnCompChan":0,"MOTN_MoveActnAux":0,"MotionDone":1,"GPIO_Set":0,"MOTN_SavePosn":0,"MOTN_SaveActnAuxPosn":0},"Data":{},"Err":{"Return":"E0000"}}
+Return Code: 0
+Command successful
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  SetActnAuxiliary()
+--------------------------------------------------
+    Allocate an immediate-start, basic move plan
+        g_actn_convert(): AuxilliaryPosnDist :  45   mm  =>  18750.0   mrev
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+    approx. run time[s] =  6
+        g_actn_convert(): BasicAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+        g_actn_convert(): BasicAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+          cmd:  0021237A00FF00FF0000010000493E07530000C3500000C35000002EE000000000B624
+          rtn:  0006247a000131c2 
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+    Set auxiliary position plan active
+          cmd:  0006237F00018B1F
+          rtn:  0005247f00ef28 
+
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 6.3 ; poll interval (ms) = 630.0
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.00400543212891  (return =  E0000 )
+  Set the Actuation Axis auxiliary position
+ 
+    GEN_ScriptLib.PositionSave()
+Set the ActnAxis   auxiliary  position (id =  2 )
+    cycle  0
+          cmd:  00052383021C56
+          rtn:  0005248300b984
+Completed status for: SetActnAuxiliary
+Checking status for: PrepareCheck
+Output: {"Status":{"ADC_GetForce":0,"PWM_FanSetDuty":0,"PWM_FanStart":0,"GPIO_Get":0,"MOTN_AllocCheckPlan":0},"Data":{"ForceValue":9172},"Err":{"Return":"E0000","Message":"GEN_ScriptLib.CommandSendRetry() error 34 retry failure"},"cmdSRStatus":0,"gpioVal":0}
+Return Code: 0
+Command successful
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  PrepareCheck()
+--------------------------------------------------
+
+  Re-set force values and get initial (no load) force value (ADC)
+  GEN_ScriptLib.ForceGetValue()
+          cmd:  00052343002A40
+          rtn:  000724430023d49531 
+
+
+    FDMDX_ScriptLib.FanStart()
+      Set fan (PWM) duty cycle
+ 
+      GEN_ScriptLib.CommandSendRetry()
+        cycle #  0
+          cmd:  0007233900004BF9D8
+          rtn:  00052439004842 
+
+      Fan (PWM) start
+ 
+      GEN_ScriptLib.CommandSendRetry()
+        cycle #  0
+          cmd:  0005233A009881
+          rtn:  0005243a001d11 
+
+
+  Insure the axis is not at the contact position
+
+    GEN_ScriptLib.gpioGet()
+      cycle #  0
+          cmd:  000523310BF510
+          rtn:  000624310000ccbf 
+
+      Channel  11 ( get offset value ) =  0  on  ActnAxis
+
+  Allocate "check device" plan
+        g_actn_convert(): Auxiliary2OffsetDist :  20   mm  =>  8333.33333333   mrev
+        g_actn_convert(): FindDeviceVel :  3   mm/s  =>  75.0   rpm
+    approx. run time [s] =  8.0
+        g_actn_convert(): BasicAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+        g_actn_convert(): BasicAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+          cmd:  0021237A00FF000B0100010000208D004B0000C3500000C3500000000000000000F8CE
+          rtn:  0006247a000201a1
+Completed status for: PrepareCheck
+Checking status for: CheckSample
+Output: {"Status":{"GPIO_ResetMotnCompChan":0,"GPIO_Set":0,"GPIO_DoorLock":0,"MOTN_DoCheckPlan":0,"MotionDone":1,"GPIO_Get":0,"GPIO_OffsetValue":0,"ADC_GetForce":0,"MOTN_SavePosn":0,"MOTN_SaveContactPosn":0},"Data":{"ForceValue":9208},"Err":{"Return":"E0000"},"gpioVal":0,"DeviceFound":1}
+Return Code: 0
+Command successful
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  CheckSample()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+    FDMDX_ScriptLib.DoorLock()
+
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  0006233014017534
+          rtn:  0005243000f2da 
+
+      Set  MainMCU  channel  20  to  1 ( door lock )
+
+  Run SampleCheckPlan (ID  2 )
+          cmd:  0006237F0002BB7C
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 8.0 ; poll interval (ms) = 800.0
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  4
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  5
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  6
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  5.41921997070  (return =  E0000 )
+
+    GEN_ScriptLib.gpioGet()
+      cycle #  0
+          cmd:  000523310BF510
+          rtn:  000624310000ccbf 
+
+      Channel  11 ( offset sensor value ) =  0  on  ActnAxis
+
+  GEN_ScriptLib.ForceGetValue()
+          cmd:  00052343002A40
+          rtn:  000724430023f870df 
+
+
+    Force delta -  36
+    Found sample - save contact position
+ 
+    GEN_ScriptLib.PositionSave()
+Set the ActnAxis   contact  position (id =  1 )
+    cycle  0
+          cmd:  00052383012C35
+          rtn:  0005248300b984
+Completed status for: CheckSample
+Checking status for: FinishPrep
+Output: {"Status":{"MOTN_DeallocAllPlans":0,"I2C_PressureRead":5},"Data":{},"Err":{"Return":"E0000","Message":"GEN_ScriptLib.FanCheck().I2C_PressureRead"}}
+Return Code: 0
+Command successful
+I2C: I2C slave device sent a NAK in response to a byte
+Debug Stream: 
+----------------- FDMDX_$RUN_INIT ----------------
+  FinishPrep()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.DeallocateAllPlans()
+      All plans de-allocated on  ActnAxis ( COM3 ;  11001 )
+ 
+  Adjust the fan for proper flow
+    FDMDX_ScriptLib.FanCheck()
+          cmd:  0007235C0001F129EF
+          rtn:  003c255c05060001f129ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb82d 
+
+      Start check at 1494004436.21  with timeout =  10  sec
+      Target flow rate =  28.3
+      P-DiffSensor: slope =  0.0026 ;   offset =  5.7
+      time delta  0.126281738281
+          cmd:  0006235D000253DA
+          rtn:  003c255d0506000253daffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6845
+Completed status for: FinishPrep
+
+****************** Completed Executing RUN_INIT command ******************
+
+UI Params: {"FRCEOS":"10","OVRRIDEDFSL":"1"}
+
+****************** Executing Seat Device command ******************
+
+
+
+Checking status for: SetupBuffers
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_SEAT ------------------
+FDMDX_SEAT.SetupBuffers()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+
+
+
+Output:
+{"Status":{"ADC_InitForceTask":0,"ENC_InitPositionTask":0},"Data":{},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+Completed status for: SetupBuffers
+
+
+
+
+Checking status for: PlanSeat
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_SEAT ------------------
+FDMDX_SEAT.PlanSeat()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.ForceMonitorInit()
+    Initialize monitor for  10.0  N (uint16  17243 )
+          cmd:  0009234700435B01021D52
+          rtn:  00052447006314 
+
+ 
+        g_actn_convert(): Auxiliary2LimitDist :  35   mm  =>  14583.3333333   mrev
+        g_actn_convert(): EOSForceVel :  8   mm/s  =>  200.0   rpm
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+        g_actn_convert(): EOSForceVel :  8   mm/s  =>  200.0   rpm
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+ 
+    GEN_ScriptLib.MotionPlanFORCEActuation()
+      duration [s] =  4.375
+          cmd:  0033237A01FF00020100010101000000000000000038F700C800015F9000015F900000000000C800015F9000015F90000000007836
+          rtn:  0006247a000021e3 
+
+ 
+
+
+
+Output:
+{"Status":{"ADC_InitMonitor":0,"MOTN_AllocSeatPlan":0},"Data":{},"Err":{"Return":"E0000"},"Duration":4.375,"AllocForcePlanStatus":0,"ActuationForcePlanId":0}
+
+
+Return Code: 0
+Command successful
+Completed status for: PlanSeat
+
+
+
+
+Checking status for: MakeContact
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_SEAT ------------------
+FDMDX_SEAT.MakeContact()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.ShakeLock()
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  000623300E0089AD
+          rtn:  0005243000f2da 
+
+      Set  ShakeAxis  channel  14  to  0 ( shake lock engaged )
+
+
+    GEN_ScriptLib.gpioGet()
+      cycle #  0
+          cmd:  000523310BF510
+          rtn:  000624310000ccbf 
+
+      Channel  11 ( offset (contact) sensor ) =  0  on  ActnAxis
+
+        g_actn_convert(): TorqueVel :  5   mm/s  =>  125.0   rpm
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238401FF00FF00007D00015F9000015F90000000006C0A
+          rtn:  00052484002013 
+
+      Move to contact command success
+
+
+
+Output:
+{"Status":{"GPIO_Set":0,"GPIO_ShakeLock":0,"GPIO_SetBrake":0,"GPIO_Get":0,"GPIO_CheckOffset":0,"MOTN_Move2Posn":0,"MOTN_Move2contact":0},"Data":{},"Err":{"Return":"E0000"},"gpioVal":0}
+
+
+Return Code: 0
+Command successful
+Completed status for: MakeContact
+
+
+
+
+Checking status for: SeatSample
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_SEAT ------------------
+SeatSample()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+  Execute the SeatPlan
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4.59375 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  4
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  5
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  6
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310000ccbf 
+
+      poll #  7
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  4.22233581543  (return =  E0000 )
+  Get position and force data
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_DoSeatPlan":0,"MotionDone":1,"GPIO_Set":0,"ADC_GetForceData":0,"ENC_GetPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23ca23c623cf23c623c223ca23ca23c623be23c723cc23c423c923bc23d123ca23cc23c923c523cc23c823c923c123cd23c723c423be23c823c223c723c523ca23c523c723c023ca23c623c223bd23c823c523c723cd23ca23cd23cd23cf23c823d023c323b923cc23c823ca23c923cf23cf23cd23c223c823ca23b923c723b823bb23c623c023c823c223c723cf23cd23cb23c123be23c723c223cb23c923cf23c023c623c323b623cb23cf23c123c323b823c823c823cd23c323c623c823ca23c523cb23c923cb23cd23c823c823c623c823bf23c423c423c823cd23c923ca23cb23c023ca23c723c223d023c823c923c023c823ce23cc23cb23c823c823ca23c023c823c323c123c523d023bd23c823c923b923ca23cf23c923c223c623b723cd23cd23cd23c123d023c423c523c923c323cc23c923c323cc23c823c923cb23cb23cf23cc23ca23c823c823c823bd23ca23c923c923cd23ca23bf23c823ca23c223c623bf23c323c123c523c223c223cb23c723c223c623c323cd23c723c723ca23cc23c923c323c423c423ae23a023c923cc23ca23c723cc23c523c623c823c323ce23cd23cc23c723c123bd23cb23c723c623c523c023cb23ca23c523c923ca23ba23b923c223cb23cc23cb23cc23cd23c823c323cb23c423cb23ca23ca23c823c923ca23c923c823cd23ce23cb23cf23c8","PosnDataPoints":250,"PosnRawData":"40a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a140a1"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+Completed status for: SeatSample
+
+
+
+
+Checking status for: EndStep
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_SEAT ------------------
+FDMDX_SEAT.EndStep()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+Completed status for: EndStep
+
+
+
+****************** Completed executing Seat Device command ******************
+ 
+UI Params: {"ACCELACTN":"2000","ACCELRTRN":"2000","ACTNSATRUN":"1","ACTNSYMET":"True","ACTUATIONS":"5","ANGLESHK":"45","DIAMSHK":"0","DISTSHK":"0","DLAYFIN":"0","DLAYHOLD":"0","DLAYINIT":"0","DLAYINTER":"0","DLAYPOSTSHK":"0","DLAYPRESHK":"0","DURATIONSHK":"5","FPTDATA":"0","FRCCONTCT":"3","FRCEOS":"0","FREQSHK":"2","MODEACTN":"0","MODESHK":"1","OVERRIDEACT":"1","OVERRIDEMRNSL":"1","OVERRIDESHK":"1","OVRRIDEDFSL":"0","PSOPENWT":"0","REPSSHK":"10","SHAKE":"False","STROKLEN":"2","TIMEACTN":"33.3","TIMERTRN":"33.3","TRIGIN":"0","TRIGOUT":"0","VELACTN":"60","VELRTRN":"60"}
+
+****************** Executing Actuate command ******************
+
+
+
+Checking status for: PlanActn
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_ACT ------------------
+    PlanActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.DeallocateAllPlans()
+      All plans de-allocated on  ActnAxis ( COM3 ;  11001 )
+ 
+      Define common motion plan variables
+        g_actn_convert(): PosnFrcActuateVel :  60   mm/s  =>  1500.0   rpm
+        g_actn_convert(): PosnFrcReturnVel :  60   mm/s  =>  1500.0   rpm
+        g_actn_convert(): PosnFrcActuateAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+        g_actn_convert(): PosnFrcReturnAccel :  2000   mm/s^2  =>  50000.0   rpm/s
+      actuationRPM =  1500.0
+
+    MODESHK = 1 (Rotary shaking enabled)
+      define common shake plan variables
+      Allocate the SHAKE plan:
+          cmd:  002B237A0205010601000A000004E204B000002580000025800000000004B00000258000002580000000002200
+          rtn:  0006247a000021e3 
+
+    Allocate Position-based actuation plan
+ 
+    GEN_ScriptLib.MotionPlanPOSITIONActuation()
+          cmd:  0033237A010801FF00000101010000000000000000034105DC0000C3500000C3500000000005DC0000C3500000C350000000005FC0
+          rtn:  0006247a000021e3 
+
+ 
+
+
+
+Output:
+{"Status":{"MOTN_DeallocAllPlans":0,"MOTN_AllocShake":0,"MOTN_AllocPlanActuate":0},"Data":{},"Err":{"Return":"E0000"},"ActuationPositionPlanId":0}
+
+
+Return Code: 0
+Command successful
+Completed status for: PlanActn
+
+
+
+
+Checking status for: MakeContact
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_ACT ------------------
+    MakeContact()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.ShakeLock()
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  000623300E0089AD
+          rtn:  0005243000f2da 
+
+      Set  ShakeAxis  channel  14  to  0 ( shake lock engaged )
+
+
+    GEN_ScriptLib.gpioGet()
+      cycle #  0
+          cmd:  000523310BF510
+          rtn:  000624310000ccbf 
+
+      Channel  11 ( offset (contact) sensor ) =  0  on  ActnAxis
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238401FF000001075300015F9000015F900000000083F4
+          rtn:  00052484002013 
+
+      Move to contact command success
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 3 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.00702667236328  (return =  E0000 )
+
+
+
+Output:
+{"Status":{"GPIO_Set":0,"GPIO_ShakeLock":0,"GPIO_SetBrake":0,"GPIO_Get":0,"GPIO_CheckOffset":0,"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_Move2Contact":0,"MotionDone":1},"Data":{},"Err":{"Return":"E0000"},"gpioVal":0}
+
+
+Return Code: 0
+Command successful
+Completed status for: MakeContact
+
+
+
+
+Checking status for: RunActn
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+------------------ FDMDX_ACT ------------------
+    RunActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233006000004
+          rtn:  0005243000f2da 
+
+    Reset  ShakeAxis  sync channel (gpio  6 )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233004006666
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  4 )
+
+    OPEN ACTUATOR
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home (OPEN)
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF000401075300015F9000015F9000000000DD39
+          rtn:  00052484002013 
+
+      Move to home (OPEN) command success
+/n   ACTIVATE SHAKE
+          cmd:  0006237F0200FD5C
+          rtn:  0005247f00ef28 
+
+  Poll OPEN ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.609474182129  (return =  E0000 )
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300800230B
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  8 )
+
+    CLOSE ACTUATOR TO CONTACT
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  001723840107010801075300015F9000015F9000000000685C
+          rtn:  00052484002013 
+
+      Move to contact command success
+      Poll for Shake complete
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 125.125 ; poll interval (ms) = 2000
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  6.30707550049  (return =  E0000 )
+      Poll CLOSE ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233108C573
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.0  (return =  E0000 )
+      CLOSED
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+  FIRE!
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 1 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.00201416015625  (return =  E0000 )
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0,"MOTN_SetShakePlanActive":0,"MotionDone":1,"GPIO_Set":0,"ENC_InitPositionTask":0,"ADC_InitForceTask":0,"MOTN_SetActPlanActive":0,"ADC_GetForceData":0,"ENC_GetPosnData":0,"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23c123bb23be23c223c923ad23bf23c523b723c123be23be23bd23ba23be23b823bf23b323c423c123be23bb23bf23bc23be23b623b123bc23ad23bb23c923c123c023bc23bc23c023b023c623c223bd23bc23c523ad23b623c923b223bb23cc23c323b523c523c023c323bc23c323c923c223c423c523c223be23e623be23c023bc23c223bf23b823b723be23c123c123ad23c323bf23c123af23af23b623b823bd23c023bb239d23c323c623be23c223c023c223c423c723b323bc23c423bd23b423c423ba23b823be23ba23bf23c423be23c623c223c423c023be23c023c023c223bf23b523b323b823bc23c223b523b923c223c423bd23bf23b923c323ca23c123b123b723c223bc23c423c523c323b623bf23be23c323bc23bd23be23be23bf23be23c123c623bf23bd23c923b623b223b623bf23be23bc23b223b323d023b723bf23c723c323bc23bf23ba23c123c023c523b723bf23bd23bf23c123c123be23c123bc23bf23c123b923be23c223c423c323c323c023bd23bc23bf23be23c223b923bb23c723c423c423b423c523c123bf23ba23c123c123be23c223b523c123c123bc23b923c423b523b623c323c623bf23bc23c423c023bc23bb23c423be23bf23c323c023be23c023c023bc23c423c123c023c323c423bd23bc23b923c123bd23c023cc23c023be23c123c423c223bb","PosnDataPoints":250,"PosnRawData":"490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490049004900490048f948e448d648eb493949b74a644b4a4c714dd4014f0321053707920a2b0d071027138817171ab51e5c21ed2555289a2bb92eaa316833ef363f384c3a1e3bb63d033e083ecb3f563fc9402d405b40363fcf3f303e563d403be93a4b3865364033d6311e2e1e2ad42740237b1fa41bb817ca13ff105c0ce0098d066c038300d84c8c4a5e487c46de457f446e43af432842b0424241da4179411f40ce4086404a401b3ff83fe33fdb3fdf3fee40054021403f4060408140a040bd40d540e940f841014104410240fb40f140e640db40d240cb40c740c640c740cb40d140d740db40de40df40df40dc40d840d540d340d140d140d240d440d640d840d940da40d940d840d640d540d440d440d440d540d640d740d840d840d840d740d640d540d540d540d540d640d740d740d740d740d640d640d640d640d640d640d640d640d640d640d6"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+------------------ FDMDX_ACT ------------------
+    RunActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233006000004
+          rtn:  0005243000f2da 
+
+    Reset  ShakeAxis  sync channel (gpio  6 )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233004006666
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  4 )
+
+    OPEN ACTUATOR
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home (OPEN)
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF000401075300015F9000015F9000000000DD39
+          rtn:  00052484002013 
+
+      Move to home (OPEN) command success
+/n   ACTIVATE SHAKE
+          cmd:  0006237F0200FD5C
+          rtn:  0005247f00ef28 
+
+  Poll OPEN ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.601928710938  (return =  E0000 )
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300800230B
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  8 )
+
+    CLOSE ACTUATOR TO CONTACT
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  001723840107010801075300015F9000015F9000000000685C
+          rtn:  00052484002013 
+
+      Move to contact command success
+      Poll for Shake complete
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 125.125 ; poll interval (ms) = 2000
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  6.30430603027  (return =  E0000 )
+      Poll CLOSE ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233108C573
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.000999450683594  (return =  E0000 )
+      CLOSED
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+  FIRE!
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 1 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.0  (return =  E0000 )
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0,"MOTN_SetShakePlanActive":0,"MotionDone":1,"GPIO_Set":0,"ENC_InitPositionTask":0,"ADC_InitForceTask":0,"MOTN_SetActPlanActive":0,"ADC_GetForceData":0,"ENC_GetPosnData":0,"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23cb23bb23c223c023c223c923c423c523c223c223ca23c923b723ba23ca23c923ba23b823b923c423c223c023c423c223b723bd23c423bc23b823c823c223cb23b923c923c123c323c523ce23c323ce23c623c423be23bc23be23bc23bc23c723ac23c323c823c023de23cc23c823c323b923cc23bc23ce23c123c423cb23bb23c423ca23c423c923c723ba23c123cc23c623c4238c23b923b823c223bd23b323bd23bd23cb23c123c323ce23cb23c723c223c623ea23c223c123c823c223ca23c723c923bf23c723c723c723be23b923c923c723c623c523cd23b423c123c623c623c723c223c023c323bb23c823c823ba23c123bc23cc23cd23cb23c523c123c623c723c623c523be23c123c723c323bf23bb23c423c523c523c623c623c523c523c623c923c323c523bd23c323c923bc23c423ca23be23c623c423c223ca23c323c623c423bd23c323bb23bb23b623c623bd23c423c723c323c223b423b723cb23bf23bd23bf23c723b923ca23c123d123c923c823ca23c323c623bc23c623c423bc23c723be23bf23c023b623c623c123be23c123be23c623c323be23bc23bd23c223c423bd23c423c223b823c723c523c223bd23ba23c223c623bc23c523c523bc23c423ba23c023c123c423bd23cc23b923be23c523b923c923c123be23c123b723bf23c623c323c723bd23c123c323bd","PosnDataPoints":250,"PosnRawData":"491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a491a4918490748f448f6492c49984a314aff4c0b4d5600b90273046b06aa09290be70eec123115b219491cee208b240427562a862d8a305f32fd3566378e39783b2a3c983db93e983f393fb3401f4069406740193f903ecf3dd33c983b1a3953374a3501326c2f8b2c6328ee253921691d88199615b812050e770b1207d904d802104da94b5e495b47a2462844f34411437842fc428a422041bd4161410c40c0407e4047401c3ffe3fef3fee3ffa4011402e404e406f408f40ae40c840de40ee40f940fe40fe40f840ef40e440da40d040c840c340c140c240c540ca40d040d540d840da40da40d840d440d140ce40cd40cc40cd40cf40d140d340d440d440d440d340d240d040cf40cf40cf40d040d140d240d340d340d340d240d140d040d040d040d040d140d240d240d240d240d240d140d140d040d040d140d140d140d240d240d240d140d140d140d140d140d140d140d1"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+------------------ FDMDX_ACT ------------------
+    RunActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233006000004
+          rtn:  0005243000f2da 
+
+    Reset  ShakeAxis  sync channel (gpio  6 )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233004006666
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  4 )
+
+    OPEN ACTUATOR
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home (OPEN)
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF000401075300015F9000015F9000000000DD39
+          rtn:  00052484002013 
+
+      Move to home (OPEN) command success
+/n   ACTIVATE SHAKE
+          cmd:  0006237F0200FD5C
+          rtn:  0005247f00ef28 
+
+  Poll OPEN ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.60440826416  (return =  E0000 )
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300800230B
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  8 )
+
+    CLOSE ACTUATOR TO CONTACT
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  001723840107010801075300015F9000015F9000000000685C
+          rtn:  00052484002013 
+
+      Move to contact command success
+      Poll for Shake complete
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 125.125 ; poll interval (ms) = 2000
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  6.30500793457  (return =  E0000 )
+      Poll CLOSE ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233108C573
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.0  (return =  E0000 )
+      CLOSED
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+  FIRE!
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 1 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.000656127929688  (return =  E0000 )
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0,"MOTN_SetShakePlanActive":0,"MotionDone":1,"GPIO_Set":0,"ENC_InitPositionTask":0,"ADC_InitForceTask":0,"MOTN_SetActPlanActive":0,"ADC_GetForceData":0,"ENC_GetPosnData":0,"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23bf23c423c623c723c923c723b523c523c623b923c723c123bf23ce23c323c323bd23c723d123c723cb23c623c523cc23bd23c423c723bf23c423c723bb23bb23c723b823c523ca23c423c923b823c823c523c423cc23c923be23c123cb23c423bc23ca23af23df23c523c123c123c223bf23c323c423c423cc23b923c023c823c923bb23d323c023c423cd23ba23b523c323c923c023ca23c123d023c823b223c323cd23e323cb23c623b423c423c723b923bf23cd23b523c323c823d323d223ca23cf23cc23be23cf23c323c723c823bd23c823c423c623be23c523bf23c823c323c623cb23c123c523cb23ca23c723c523c323c823c823c723c123b723bf23ca23c523c823ca23c023bd23c523c323b623c723c723c423c523bc23bb23ba23c423bd23cc23ba23cc23c623c723c723ce23be23c623c623c523b323b823ba23bb23c723c623bd23bf23bc23ba23c823cc23c523cc23c623c423c623ca23c823b223bc23c523c723c623c423c523bf23c723cc23be23c423c923c023c023c923c523c023c823ca23c423b723c923c423c523c723bf23bc23c323d123cb23c623b523c823c723bc23c723c723cc23c223b423ca23c123c523ca23c923c823c823cf23c723c823ba23c823c223cb23c123ba23c523be23c923cb23c923bb23c523c223bd23ba23ba23cc23c523c823bd23c323c6","PosnDataPoints":250,"PosnRawData":"4947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947494749474947493e4929491e493d49954a1d4ad74bcc4d00004e01f103ce05f108570af90de01108147118001b9d1f3f22c8262729652c7b2f643217349536d838d93aa33c2e3d6e3e683f233fa9401a4079409a40683ff63f4c3e683d473be73a3f3851362333b130ef2de62a9326f7232f1f571b6a178013bc10200cab095f0646036500c24c7e4a5a488246ef459b449443e0435d42ea4280421e41c2416c411f40db40a04070404b403240254024402e404040574071408d40a740bf40d440e540f240fa40fe40fd40f940f140e940e040d940d340cf40ce40cf40d240d740db40de40e140e140e140df40dc40da40d840d740d740d740d940da40dc40dd40dd40dd40dc40db40da40d940d840d840d940da40db40dc40dc40dc40db40da40da40d940d940da40da40db40db40db40db40db40da40da40da40da40da40da40da40da40da40da40da"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+------------------ FDMDX_ACT ------------------
+    RunActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233006000004
+          rtn:  0005243000f2da 
+
+    Reset  ShakeAxis  sync channel (gpio  6 )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233004006666
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  4 )
+
+    OPEN ACTUATOR
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home (OPEN)
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF000401075300015F9000015F9000000000DD39
+          rtn:  00052484002013 
+
+      Move to home (OPEN) command success
+/n   ACTIVATE SHAKE
+          cmd:  0006237F0200FD5C
+          rtn:  0005247f00ef28 
+
+  Poll OPEN ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.603057861328  (return =  E0000 )
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300800230B
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  8 )
+
+    CLOSE ACTUATOR TO CONTACT
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  001723840107010801075300015F9000015F9000000000685C
+          rtn:  00052484002013 
+
+      Move to contact command success
+      Poll for Shake complete
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 125.125 ; poll interval (ms) = 2000
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  6.30764770508  (return =  E0000 )
+      Poll CLOSE ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233108C573
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.0  (return =  E0000 )
+      CLOSED
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+  FIRE!
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 1 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.0  (return =  E0000 )
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0,"MOTN_SetShakePlanActive":0,"MotionDone":1,"GPIO_Set":0,"ENC_InitPositionTask":0,"ADC_InitForceTask":0,"MOTN_SetActPlanActive":0,"ADC_GetForceData":0,"ENC_GetPosnData":0,"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23c823b923c823cc23d423ca23c923bb23cd23bb23c523c423b623da23c523bd23bb23c723ca23d123bb23c723bb23c223cb23c923cc23c223cd23c223c123c323cc23c723ca23c323c223a523e723ca23cc23bf23c523cb23c323ca23e023c823b223d123c423d323be23be23d523cf23ce23c723c523c623d023c223c723ca23c023ce23c023d023cc23cd23e223b723c823c323bc23d023c223c823c823c023c123d123b723d123c723c623c723cb23c423c923ca23c823bd23c723c423c823d223d023c823ca23c723cf23c423c423d423ca23ce23c423cd23cf23c923be23be23cc23c823cb23c623c823c223c723ba23c523ce23c323c623c523cb23c223bf23c923c523c923c023ca23c623cd23cd23cb23cb23bb23c523cb23bf23ca23c423d023c023c623c323c923ca23ca23c923c623bd23bb23c823cc23bd23c323c023cb23c423d023be23bf23cb23ca23d123cd23cc23c623bf23c823cc23c823bd23c623c623c023cb23c823d123cc23c123bb23cd23c623ce23c823cc23c423c823bd23cc23b923cd23bd23cc23d323d323c923cb23ce23cd23be23be23c523c023cc23bd23ca23c023d123cd23c423cb23cb23ca23c623c523c723c423bb23c923c723cb23cb23ba23be23cf23ce23cd23c623c523d023ca23c023c923d323c723ba23c823c723cd23c723c823cf23be23cc","PosnDataPoints":250,"PosnRawData":"49464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649464946494649434931491f4927496749da4a7d4b574c6f4dc4012f02f004f3073c09c20c8a0f9612e3166819ff1da4213c24ae27fb2b242e2130ed338235e2380039e33b8d3cef3e073ede3f783ff04059409a408b40313f9f3ed33dcd3c883aff392e371a34c632252f3a2c08288924cf20fe1d1a192a155311a70e210ac30793049b01dc4d7f4b3d49444795462444fa44224390431642a7424041e14187413440e940a84072404640274014400e4013402240384053406f408c40a840c140d840ea40f8410241074107410340fc40f340ea40e340dd40d940d840d940dc40e140e540e940eb40ec40ec40ea40e740e540e240e140e140e140e340e540e740e840e840e840e740e640e440e340e340e340e440e540e640e640e640e640e640e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e540e5"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+------------------ FDMDX_ACT ------------------
+    RunActn()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233006000004
+          rtn:  0005243000f2da 
+
+    Reset  ShakeAxis  sync channel (gpio  6 )
+
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  0006233004006666
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  4 )
+
+    OPEN ACTUATOR
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home (OPEN)
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF000401075300015F9000015F9000000000DD39
+          rtn:  00052484002013 
+
+      Move to home (OPEN) command success
+/n   ACTIVATE SHAKE
+          cmd:  0006237F0200FD5C
+          rtn:  0005247f00ef28 
+
+  Poll OPEN ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310404FF
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.602439880371  (return =  E0000 )
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300800230B
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  8 )
+
+    CLOSE ACTUATOR TO CONTACT
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis contact
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  001723840107010801075300015F9000015F9000000000685C
+          rtn:  00052484002013 
+
+      Move to contact command success
+      Poll for Shake complete
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 125.125 ; poll interval (ms) = 2000
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  1
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  2
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310000ccbf 
+
+      poll #  3
+        repeat #  0
+        status / value = 0
+          cmd:  000523310624BD
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  6.30699920654  (return =  E0000 )
+      Poll CLOSE ACTUATOR
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 4 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233108C573
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.00502014160156  (return =  E0000 )
+      CLOSED
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+ 
+    GEN_ScriptLib.PositionBufferInit()
+      cycle  0
+          cmd:  000C236300001400FA000101E240
+          rtn:  0005246300a936 
+
+ 
+ 
+    GEN_ScriptLib.ForceBufferInit()
+          cmd:  000C234400001400FA000101F417
+          rtn:  00052444003647 
+
+  FIRE!
+          cmd:  0006237F0100A80F
+          rtn:  0005247f00ef28 
+
+ 
+    GEN_ScriptLib.PollMotion()
+      Timeout (s) = 1 ; poll interval (ms) = 500
+      poll #  0
+        repeat #  0
+        status / value = 0
+          cmd:  0005233100447B
+          rtn:  000624310001dc9e 
+
+      Motion Done =  1  at delta  0.000694274902344  (return =  E0000 )
+ 
+    GEN_ScriptLib.ForceBufferRead()
+    Get force buffer data
+ 
+    GEN_ScriptLib.PositionBufferRead()
+    Get position buffer data
+ 
+    GEN_ScriptLib.BufferClear()
+      cycle #  0
+      cycle #  0
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0,"MOTN_SetShakePlanActive":0,"MotionDone":1,"GPIO_Set":0,"ENC_InitPositionTask":0,"ADC_InitForceTask":0,"MOTN_SetActPlanActive":0,"ADC_GetForceData":0,"ENC_GetPosnData":0,"ADC_ClearForceData":0,"ENC_ClearPosnData":0},"Data":{"ForceDataPoints":250,"ForceRawData":"23cb23c623bb23c623cd23c523c823c523c923c923c123cb23c823c823c923c923c623c723cd23c623c123c123c523b923c523c423c923c723c423b923c723cf23c523c923ca23c623bf23cd23c223c423bd23c823bc23c423cc23cb23c223bd23c323d023cc23c623d123ca23bb23c523cb23c623d023c323cb23c223c523c323ca23bd23c223c423c923c023c323c423c323c923cc23c623c223c023bd23c623c823c123c623ca23c723c723ca23ce23c723c223ca23c423c923b823c223ca23c623c023c823ca23c923c723c023c623ca23c623c823c823c923cc23c723c823c823c223bc23c923c223c723ca23c523c723c223c223c823c923c023c523cb23c523d123c223c923be23c523ca23c523ba23ca23bd23ca23c923c823c823c823c923c423cb23c923ce23c823cc23c823c623c823c723c723cd23c123c723c223cb23c423cd23c623c723c923c923ca23ca23bc23c823c223c723c723c123c223c823c823c923cd23c923cd23c823c723ca23c423c923cf23c223c523c923c923c923c723c023c823ca23cb23c723c223c223c723cc23cb23c523c823c523c923c523c923cb23c423c823c123d123c923c723ca23c523cb23c823ce23cc23c623c923ca23c623c723cb23cd23c123c923c523be23cd23c623c723c923cd23c423c623c523cc23c623cb23c923c723c423c423cc","PosnDataPoints":250,"PosnRawData":"49324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932493249324932492649114909492e498c4a194ad74bd34d0d0060020903ee061908850b2e0e1e114e14bf18521bf11f942319267529b02cc12fa6325334cd370939043ac93c4c3d833e753f293faa401a4073408a404f3fd73f263e3a3d123ba939f7380035ca334c307f2d6d2a0f2669229d1ec21ad216eb132c0f940c2408dd05cb02f100584c1b4a00483346a7455c446043b4433442c0425541f14193413b40ec40a6406a403a40163fff3ff53ff6400340184032404e406c408940a540be40d240e340ef40f640f740f440ed40e440da40d140ca40c540c340c340c640cb40d040d440d740d940d940d740d440d140cf40cd40cd40cd40cf40d140d240d440d440d440d340d240d040cf40cf40cf40d040d140d240d340d340d340d240d140d040d040d040d140d140d140d240d240d240d140d140d140d140d140d140d140d140d140d140d140d140d140d140d140d140d1"},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+Completed status for: RunActn
+
+
+
+
+Checking status for: EndStep
+
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ------------------ FDMDX_ACT ------------------
+EndStep()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.DeallocateAllPlans()
+      All plans de-allocated on  ActnAxis ( COM3 ;  11001 )
+ 
+ 
+    GEN_ScriptLib.DeallocateAllPlans()
+      All plans de-allocated on  ShakeAxis ( COM4 ;  11002 )
+ 
+
+
+
+Output:
+{"Status":{"MOTN_DeallocAllPlans":0},"Data":{},"Err":{"Return":"E0000"}}
+
+
+Return Code: 0
+Command successful
+Completed status for: EndStep
+
+
+
+****************** Completed executing Actuate command ******************
+ 
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ----------------- FDMDX_$RUN_END -----------------
+  HomeActnAxis()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300000AAA2
+          rtn:  0005243000f2da 
+
+    Reset  ActnAxis  sync channel (gpio  0 )
+
+Return the actuation stage to its home position
+        g_actn_convert(): BasicVel :  75   mm/s  =>  1875.0   rpm
+ 
+    GEN_ScriptLib.MoveToPosition() -  ActnAxis home
+        g_actn_convert(): ActnAccel :  3600   mm/s^2  =>  90000.0   rpm/s
+          cmd:  0017238400FF00FF00075300015F9000015F90000000006B4A
+          rtn:  00052484002013 
+
+      Move to home command success
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":0,"MOTN_Move2Posn":0,"MOTN_MoveActnHome":0},"Data":{},"Err":{"Return":"E0000"}}
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ----------------- FDMDX_$RUN_END -----------------
+  HomeShakeAxis()
+--------------------------------------------------
+ 
+    GEN_ScriptLib.MotionResetSyncChan()
+      try #  0
+          cmd:  000623300A004569
+          rtn:  003c253003010a00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0cfa 
+
+
+
+
+Output:
+{"Status":{"GPIO_ResetMotnCompChan":3},"Data":{},"Err":{"Message":"GEN_ScriptLib.MotionResetSyncChan()","Return":"E5002"}}
+
+
+Error Stream:
+
+
+
+
+
+Debug Stream:
+ ----------------- FDMDX_$RUN_END -----------------
+  SecureHardware()
+--------------------------------------------------
+    FDMDX_ScriptLib.FanStop()
+          cmd:  0005233B00ABB0
+          rtn:  0005243b002e20 
+
+ 
+    GEN_ScriptLib.ShakeLock()
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  000623300E0089AD
+          rtn:  0005243000f2da 
+
+      Set  ShakeAxis  channel  14  to  0 ( shake lock engaged )
+
+    FDMDX_ScriptLib.LightSwitch()
+      cycle  0
+          cmd:  0006233015005624
+          rtn:  0005243000f2da 
+
+       MainMCU  channel  21  to  0 ( off )
+
+    FDMDX_ScriptLib.DoorLock()
+
+ 
+    GEN_ScriptLib.gpioSet()
+      cycle  0
+          cmd:  0006233014006515
+          rtn:  0005243000f2da 
+
+      Set  MainMCU  channel  20  to  0 ( door lock )
+
+
+
+
+Output:
+{"Status":{"PWM_FanStart":0,"GPIO_Set":0,"GPIO_ShakeLock":0,"GPIO_SwitchLights":0,"GPIO_DoorLock":0},"Data":{},"Err":{"Return":"E0000"}}
