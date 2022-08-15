@@ -7,7 +7,7 @@ William Brown
 Mech Engineering Co-Op Jan - June '17 
 
 
-NOTE: This program was written in Python 2.7 and will not run , as written, with a Python 3.X compiler!! 
+NOTE: This program was written in Python 2.7 and will not run , as written, with a Python 3.X interpreter!! 
 
 Libraries Needed: Matplotlib
 
